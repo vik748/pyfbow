@@ -20,40 +20,40 @@
 namespace py = boost::python;
 
 cv::Mat test_np_mat(const cv::Mat& in) {
-	std::cerr << "in: " << in << std::endl;
-	std::cerr << "sz: " << in.size() << std::endl;
-	return in.clone();
+    std::cerr << "in: " << in << std::endl;
+    std::cerr << "sz: " << in.size() << std::endl;
+    return in.clone();
 }
 
 cv::Mat test_with_args(const cv::Mat_<float>& in, const int& var1 = 1,
-	const double& var2 = 10.0, const std::string& name = std::string("test_name")) {
-	std::cerr << "in: " << in << std::endl;
-	std::cerr << "sz: " << in.size() << std::endl;
-	std::cerr << "Returning transpose" << std::endl;
-	return in.t();
+    const double& var2 = 10.0, const std::string& name = std::string("test_name")) {
+    std::cerr << "in: " << in << std::endl;
+    std::cerr << "sz: " << in.size() << std::endl;
+    std::cerr << "Returning transpose" << std::endl;
+    return in.t();
 }
 
 class GenericWrapper {
 public:
-	GenericWrapper(const int& _var_int = 1, const float& _var_float = 1.f,
-		const double& _var_double = 1.f, const std::string& _var_string = std::string("test_string"))
-		: var_int(_var_int), var_float(_var_float), var_double(_var_double), var_string(_var_string)
-	{
+    GenericWrapper(const int& _var_int = 1, const float& _var_float = 1.f,
+        const double& _var_double = 1.f, const std::string& _var_string = std::string("test_string"))
+        : var_int(_var_int), var_float(_var_float), var_double(_var_double), var_string(_var_string)
+    {
 
-	}
+    }
 
-	cv::Mat process(const cv::Mat& in) {
-		std::cerr << "in: " << in << std::endl;
-		std::cerr << "sz: " << in.size() << std::endl;
-		std::cerr << "Returning transpose" << std::endl;
-		return in.t();
-	}
+    cv::Mat process(const cv::Mat& in) {
+        std::cerr << "in: " << in << std::endl;
+        std::cerr << "sz: " << in.size() << std::endl;
+        std::cerr << "Returning transpose" << std::endl;
+        return in.t();
+    }
 
 private:
-	int var_int;
-	float var_float;
-	double var_double;
-	std::string var_string;
+    int var_int;
+    float var_float;
+    double var_double;
+    std::string var_string;
 };
 
 class Vocabulary
@@ -61,25 +61,25 @@ class Vocabulary
 public:
 
     /* DBOW3
-     * 
+     *
      Vocabulary::Vocabulary (int k, int L, WeightingType weighting, ScoringType scoring)
      : m_k(k), m_L(L), m_weighting(weighting), m_scoring(scoring),
      m_scoring_object(NULL) {
      createScoringObject();}
 
 
-	Vocabulary(int k = 10, int L = 5, DBoW3::WeightingType weighting = DBoW3::TF_IDF, DBoW3::ScoringType scoring = DBoW3::L1_NORM, const std::string& path = std::string()) {
-		vocabulary = new DBoW3::Vocabulary(k, L, weighting, scoring);
-		if (!path.empty())
-			load(path);
-	}
-    
-    
+    Vocabulary(int k = 10, int L = 5, DBoW3::WeightingType weighting = DBoW3::TF_IDF, DBoW3::ScoringType scoring = DBoW3::L1_NORM, const std::string& path = std::string()) {
+        vocabulary = new DBoW3::Vocabulary(k, L, weighting, scoring);
+        if (!path.empty())
+            load(path);
+    }
+
+
     * fbow
-    
+
     Vocabulary(): _data((char*)nullptr,&AlignedFree){}
     Vocabulary(Vocabulary&&) = default;
-    * 
+    *
     *   fbow::VocabularyCreator::Params params;
         params.k = stoi(cml("-k","10"));
         params.L = stoi(cml("-l","6"));
@@ -105,180 +105,179 @@ public:
         params.nthreads = 1;
         params.maxIters = 0;
         params.verbose = true;
-        
+
         fbow::VocabularyCreator voc_creator;
         fbow::Vocabulary voc;
         std::cout << "Creating a " << params.k << "^" << params.L << " vocabulary..." << std::endl;
-		voc_creator.create(voc, features, std::string("NA"), params);
-	}  
-    */  
-    
-    Vocabulary(std::vector<cv::Mat> features, int k = 10, int L = 6, int nthreads = 1, 
-               int maxIters = 0, bool verbose = true, std::string desc_name = std::string("NA")){
-        
-        fbow::VocabularyCreator::Params params;
-        params.k = k;
-        params.L = L;
-        params.nthreads = nthreads;
-        params.maxIters = maxIters;
-        params.verbose = verbose;
-        
-        fbow::VocabularyCreator voc_creator;
-        fbow::Vocabulary voc;
-        std::cout << "Creating a " << params.k << "^" << params.L << " vocabulary..." << std::endl;
-		voc_creator.create(voc, features, desc_name, params);
-	}
-    
-
-	~Vocabulary() {
-		delete voc;
-	}
-	
-    /*
-	void create(const  std::vector<cv::Mat>   &training_features) {
-		vocabulary->create(training_features);
-	}
-	
-	void clear() {
-		vocabulary->clear();
-	}
-
-	void load(const std::string& path) {
-		vocabulary->load(path);
-	}
-
-	void save(const std::string& path, bool binary_compressed = true) {
-		vocabulary->save(path, binary_compressed);
-	}
-
-	fbow::BowVector transform(const  std::vector<cv::Mat> & features) {
-		fbow::BowVector word;
-		vocabulary->transform(features, word);
-		return word;
-	}
-
-	double score(const  fbow::BowVector &A, const fbow::BowVector &B) {
-		return vocabulary->score(A, B);
-	}
+        voc_creator.create(voc, features, std::string("NA"), params);
+    }
     */
-    
-	fbow::Vocabulary * voc;
-    
+
+    Vocabulary(int k = 10, int L = 6, int nthreads = 1, int maxIters = 0, bool verbose = true){
+        voc_creator_params.k = k;
+        voc_creator_params.L = L;
+        voc_creator_params.nthreads = nthreads;
+        voc_creator_params.maxIters = maxIters;
+        voc_creator_params.verbose = verbose;
+    }
+
+
+    ~Vocabulary() {
+        //delete voc;
+        //delete voc_creator;
+    }
+
+
+    void create(const  std::vector<cv::Mat>   &training_features ) {
+        std::cout << "Creating a " << voc_creator_params.k << "^" << voc_creator_params.L << " vocabulary..." << std::endl;
+
+        voc_creator->create(*voc, training_features, std::string("NA"), voc_creator_params);
+    }
+
+    /*
+
+    void clear() {
+        vocabulary->clear();
+    }
+
+
+    void load(const std::string& path) {
+        vocabulary->load(path);
+    }
+
+    void save(const std::string& path, bool binary_compressed = true) {
+        vocabulary->save(path, binary_compressed);
+    }
+
+    fbow::BowVector transform(const  std::vector<cv::Mat> & features) {
+        fbow::BowVector word;
+        vocabulary->transform(features, word);
+        return word;
+    }
+
+    double score(const  fbow::BowVector &A, const fbow::BowVector &B) {
+        return vocabulary->score(A, B);
+    }
+    */
+
+    fbow::Vocabulary * voc;
+    fbow::VocabularyCreator * voc_creator;
+    fbow::VocabularyCreator::Params voc_creator_params;
 };
 
 /*
 class Database
 {
 public:
-	Database(const std::string& path = std::string()) {
-		if (path.empty())
-			database = new fbow::Database();
-		else
-			database = new fbow::Database(path);
-	}
-	~Database() {
-		delete database;
-	}
+    Database(const std::string& path = std::string()) {
+        if (path.empty())
+            database = new fbow::Database();
+        else
+            database = new fbow::Database(path);
+    }
+    ~Database() {
+        delete database;
+    }
 
-	void setVocabulary(const Vocabulary& vocabulary, bool use_di, int di_levels=0) {
-		database->setVocabulary(*vocabulary.vocabulary, use_di, di_levels);
-	}
+    void setVocabulary(const Vocabulary& vocabulary, bool use_di, int di_levels=0) {
+        database->setVocabulary(*vocabulary.vocabulary, use_di, di_levels);
+    }
 
-	unsigned int add(const  cv::Mat & features) {
-		return database->add(features, NULL, NULL);
-	}
+    unsigned int add(const  cv::Mat & features) {
+        return database->add(features, NULL, NULL);
+    }
 
-	std::vector<fbow::Result> query(const  cv::Mat &features, int max_results = 1, int max_id = -1) {
-		fbow::QueryResults results;
-		database->query(features, results, max_results, max_id);
-		return results;
-	}
+    std::vector<fbow::Result> query(const  cv::Mat &features, int max_results = 1, int max_id = -1) {
+        fbow::QueryResults results;
+        database->query(features, results, max_results, max_id);
+        return results;
+    }
 
-	void save(const std::string &filename) const {
-		database->save(filename);
-	}
+    void save(const std::string &filename) const {
+        database->save(filename);
+    }
 
-	void load(const std::string &filename) {
-		database->load(filename);
-	}
+    void load(const std::string &filename) {
+        database->load(filename);
+    }
 
-	void loadVocabulary(const std::string &filename, bool use_di, int di_levels=0) {
-		fbow::Vocabulary voc;
-		voc.load(filename);
-		database->setVocabulary(voc, use_di, di_levels);
-	}
+    void loadVocabulary(const std::string &filename, bool use_di, int di_levels=0) {
+        fbow::Vocabulary voc;
+        voc.load(filename);
+        database->setVocabulary(voc, use_di, di_levels);
+    }
 
 
 private:
-	fbow::Database * database;
+    fbow::Database * database;
 };
 */
 
 // Wrap a few functions and classes for testing purposes
 namespace fs {
-	namespace python {
+    namespace python {
 
-		BOOST_PYTHON_MODULE(pyfbow)
-		{
-			// Main types export
-			fs::python::init_and_export_converters();
-			py::scope scope = py::scope();
+        BOOST_PYTHON_MODULE(pyfbow)
+        {
+            // Main types export
+            fs::python::init_and_export_converters();
+            py::scope scope = py::scope();
 
 
             /*
-			py::enum_<fbow::WeightingType>("WeightingType")
-				.value("TF_IDF", fbow::TF_IDF)
-				.value("TF", fbow::TF)
-				.value("IDF", fbow::IDF)
-				.value("BINARY", fbow::BINARY);
+            py::enum_<fbow::WeightingType>("WeightingType")
+                .value("TF_IDF", fbow::TF_IDF)
+                .value("TF", fbow::TF)
+                .value("IDF", fbow::IDF)
+                .value("BINARY", fbow::BINARY);
 
-			py::enum_<fbow::ScoringType>("ScoringType")
-				.value("L1_NORM", fbow::L1_NORM)
-				.value("L2_NORM", fbow::L2_NORM)
-				.value("CHI_SQUARE", fbow::CHI_SQUARE)
-				.value("KL", fbow::KL)
-				.value("BHATTACHARYYA", fbow::BHATTACHARYYA)
-				.value("DOT_PRODUCT", fbow::DOT_PRODUCT);
-            
+            py::enum_<fbow::ScoringType>("ScoringType")
+                .value("L1_NORM", fbow::L1_NORM)
+                .value("L2_NORM", fbow::L2_NORM)
+                .value("CHI_SQUARE", fbow::CHI_SQUARE)
+                .value("KL", fbow::KL)
+                .value("BHATTACHARYYA", fbow::BHATTACHARYYA)
+                .value("DOT_PRODUCT", fbow::DOT_PRODUCT);
+
             py::class_<Vocabulary>("Vocabulary")
-				.def(py::init<py::optional<int, int, DBoW3::WeightingType, DBoW3::ScoringType, std::string> >(
-				(py::arg("k") = 10, py::arg("L") = 5, py::arg("weighting") = DBoW3::TF_IDF, py::arg("scoring") = DBoW3::L1_NORM,
-					py::arg("path") = std::string())))
+                .def(py::init<py::optional<int, int, DBoW3::WeightingType, DBoW3::ScoringType, std::string> >(
+                (py::arg("k") = 10, py::arg("L") = 5, py::arg("weighting") = DBoW3::TF_IDF, py::arg("scoring") = DBoW3::L1_NORM,
+                    py::arg("path") = std::string())))
             */
-            
-			// Class
-			py::class_<Vocabulary>("Vocabulary")
-				.def(py::init< std::vector<cv::Mat>, py::optional<int, int, int, int, bool, std::string>>(
-				 (py::arg("features") = std::vector<cv::Mat>, py::arg("k") = 10, py::arg("L") = 5, py::arg("nthreads") = 1, py::arg("maxIters") = 0, py::arg("verbose") = true, 
-                 py::arg("desc_name") = std::string("NA") )));
-                                        
-			//	.def("load", &Vocabulary::load)
-			//	.def("save", &Vocabulary::save)
-			//	.def("create", &Vocabulary::create)
-			//	.def("transform", &Vocabulary::transform, py::return_value_policy<py::return_by_value>())
-			//	.def("score", &Vocabulary::score)
-			//	.def("clear", &Vocabulary::clear);
 
-/*			py::class_<Database>("Database")
-				.def(py::init<py::optional<std::string> >(py::arg("path") = std::string()))
-				.def("setVocabulary", &Database::setVocabulary)
-				.def("save", &Database::save)
-				.def("load", &Database::load)
-				.def("loadVocabulary", &Database::loadVocabulary)
-				.def("add", &Database::add)
-				.def("query", &Database::query, py::return_value_policy<py::return_by_value>());
+            // Class
+            py::class_<Vocabulary>("Vocabulary")
+                .def(py::init< py::optional<int, int, int, int, bool> >(
+                    (py::arg("k") = 10, py::arg("L") = 5, py::arg("nthreads") = 1,
+                     py::arg("maxIters") = 0, py::arg("verbose") = true )))
+                .def("create", &Vocabulary::create);
+            //  .def("load", &Vocabulary::load)
+            //  .def("save", &Vocabulary::save)
+
+            //  .def("transform", &Vocabulary::transform, py::return_value_policy<py::return_by_value>())
+            //  .def("score", &Vocabulary::score)
+            //  .def("clear", &Vocabulary::clear);
+
+/*          py::class_<Database>("Database")
+                .def(py::init<py::optional<std::string> >(py::arg("path") = std::string()))
+                .def("setVocabulary", &Database::setVocabulary)
+                .def("save", &Database::save)
+                .def("load", &Database::load)
+                .def("loadVocabulary", &Database::loadVocabulary)
+                .def("add", &Database::add)
+                .def("query", &Database::query, py::return_value_policy<py::return_by_value>());
 
 
-			py::class_<fbow::Result>("Result")
-				.def_readonly("Id", &fbow::Result::Id)
-				.def_readonly("Score", &fbow::Result::Score)
-				.def_readonly("nWords", &fbow::Result::nWords)
-				.def_readonly("bhatScore", &fbow::Result::bhatScore)
-				.def_readonly("chiScore", &fbow::Result::chiScore)
-				.def_readonly("sumCommonVi", &fbow::Result::sumCommonVi)
-				.def_readonly("sumCommonWi", &fbow::Result::sumCommonWi)
-				.def_readonly("expectedChiScore", &fbow::Result::expectedChiScore);*/
-		}
+            py::class_<fbow::Result>("Result")
+                .def_readonly("Id", &fbow::Result::Id)
+                .def_readonly("Score", &fbow::Result::Score)
+                .def_readonly("nWords", &fbow::Result::nWords)
+                .def_readonly("bhatScore", &fbow::Result::bhatScore)
+                .def_readonly("chiScore", &fbow::Result::chiScore)
+                .def_readonly("sumCommonVi", &fbow::Result::sumCommonVi)
+                .def_readonly("sumCommonWi", &fbow::Result::sumCommonWi)
+                .def_readonly("expectedChiScore", &fbow::Result::expectedChiScore);*/
+        }
 
-	} // namespace fs
+    } // namespace fs
 } // namespace python
