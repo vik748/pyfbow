@@ -26,4 +26,8 @@
 # Executables
 *.exe
 *.out
-*.app
+*.ap
+
+/build
+/install/fbow
+/install/fbow_bin
