@@ -26,7 +26,7 @@ before_install:
 install:
   # Create a new environment
   - conda create -q -n pyfbow_test_env python=$TRAVIS_PYTHON_VERSION opencv=3.3.* numpy boost
-  - source activate pyfbow_test_env
+  - conda activate pyfbow_test_env
   - chmod +x build_and_install_pyfbow.sh
   - ./build_and_install_pyfbow.sh
 
