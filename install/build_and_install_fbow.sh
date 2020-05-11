@@ -1,6 +1,6 @@
 # Install fbow
 CWD=`pwd`
-git clone https://github.com/rmsalinas/fbow fbow
+git clone --depth 1 https://github.com/rmsalinas/fbow fbow
 mkdir -p fbow/build
 cd fbow/build
 
