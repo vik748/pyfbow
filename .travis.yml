@@ -31,3 +31,5 @@ install:
   - ./build_and_install_pyfbow.sh
 
 script:
+  - cd build
+  - python -c "import pyfbow"
