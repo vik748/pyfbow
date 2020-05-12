@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/vik748/pyfbow.svg?branch=master
+    :target: https://travis-ci.org/vik748/pyfbow
+
 pyfbow
 ==============
 
