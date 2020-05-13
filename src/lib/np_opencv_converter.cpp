@@ -11,7 +11,6 @@ namespace fs { namespace python {
 static int py_init() {
   Py_Initialize();
   import_array();
-  return 1;
 }
 
 // Singleton init and export converters
@@ -20,13 +19,13 @@ bool init_and_export_converters() {
 
   if (export_type_conversions_once)
     return false;
-
+  
   std::cerr << "PYTHON TYPE CONVERTERS exported" << std::endl;
   export_type_conversions_once = true;
 
   // Py_Init and array import
   py_init();
-
+  
   // => py::list
   expose_template_type<int>();
   expose_template_type<float>();
@@ -40,7 +39,7 @@ bool init_and_export_converters() {
   expose_template_type< std::vector<cv::Point> >();
   expose_template_type< std::vector<cv::Point2f> >();
   expose_template_type< std::vector<cv::KeyPoint> >();
-
+  
   expose_template_type< std::vector<cv::Mat> >();
   expose_template_type< std::vector<cv::Mat1b > >();
   expose_template_type< std::vector<cv::Mat1f > >();
@@ -58,7 +57,7 @@ bool init_and_export_converters() {
 
   // register the to-from-python converter for each of the types
   Mat_PyObject_converter< cv::Mat >();
-
+  
   // 1-channel
   Mat_PyObject_converter< cv::Mat1b >();
   Mat_PyObject_converter< cv::Mat1s >();

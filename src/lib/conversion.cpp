@@ -10,7 +10,6 @@
 static int init()
 {
     import_array();
-    return 1;
 }
 
 static int failmsg(const char *fmt, ...)
@@ -90,9 +89,9 @@ public:
         return u;
     }
 
-    UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, int flags, UMatUsageFlags usageFlags) const
+	UMatData* allocate(int dims0, const int* sizes, int type, void* data, size_t* step, int flags, UMatUsageFlags usageFlags) const
     {
-        //USAGE_DEFAULT;
+		USAGE_DEFAULT;
         if( data != 0 )
         {
             CV_Error(Error::StsAssert, "The data should normally be NULL!");
@@ -120,9 +119,9 @@ public:
         return allocate(o, dims0, sizes, type, step);
     }
 
-    bool allocate(UMatData* u, int accessFlags, UMatUsageFlags usageFlags) const
+	bool allocate(UMatData* u, int accessFlags, UMatUsageFlags usageFlags) const
     {
-        return stdAllocator->allocate(u, accessFlags, usageFlags);
+		return stdAllocator->allocate(u, accessFlags, usageFlags);
     }
 
     void deallocate(UMatData* u) const
@@ -135,7 +134,7 @@ public:
             delete u;
         }
     }
-
+ 
     const MatAllocator* stdAllocator;
 };
 #else
@@ -189,9 +188,9 @@ public:
     }
 };
 #endif
+  
 
-
-
+  
 NumpyAllocator g_numpyAllocator;
 
 NDArrayConverter::NDArrayConverter() { init(); }
@@ -210,7 +209,7 @@ cv::Mat NDArrayConverter::toMat(const PyObject *o)
     {
         if( !m.data )
             m.allocator = &g_numpyAllocator;
-        return m;
+		return m;
     }
 
     if( !PyArray_Check(o) )
@@ -242,7 +241,7 @@ cv::Mat NDArrayConverter::toMat(const PyObject *o)
     const npy_intp* _sizes = PyArray_DIMS(o);
     const npy_intp* _strides = PyArray_STRIDES(o);
     bool transposed = false;
-
+    
     for(int i = 0; i < ndims; i++)
     {
         size[i] = (int)_sizes[i];
@@ -265,7 +264,7 @@ cv::Mat NDArrayConverter::toMat(const PyObject *o)
     // std::cerr << " ndims: " << ndims
     //           << " size: " << size
     //           << " type: " << type
-    //           << " step: " << step
+    //           << " step: " << step 
     //           << " size: " << size[2] << std::endl;
 
     // TODO: Possible bug in multi-dimensional matrices
@@ -276,15 +275,15 @@ cv::Mat NDArrayConverter::toMat(const PyObject *o)
         type |= CV_MAKETYPE(0, size[2]);
     }
 #endif
-
+    
     if( ndims > 2)
     {
         failmsg("toMat: Object has more than 2 dimensions");
     }
-
+    
     m = Mat(ndims, size, type, PyArray_DATA(o), step);
     // m.u = g_numpyAllocator.allocate(o, ndims, size, type, step);
-
+    
     if( m.data )
     {
 #if OPENCV_3
@@ -324,7 +323,7 @@ PyObject* NDArrayConverter::toNDArray(const cv::Mat& m)
     Py_INCREF(o);
     // p->addref();
     // pyObjectFromRefcount(p->refcount);
-    return o;
+    return o; 
 #else
     if( !m.data )
       Py_RETURN_NONE;
