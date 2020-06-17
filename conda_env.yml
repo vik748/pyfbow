@@ -1,0 +1,9 @@
+name: pyfbow_env
+channels:
+  - defaults
+dependencies:
+  - python
+  - numpy
+  - boost
+  - cmake
+  - py-boost

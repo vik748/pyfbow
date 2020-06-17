@@ -113,6 +113,13 @@ public:
         BOOST_LOG_TRIVIAL(debug) << "Completed Writing to file: " << path;
     }
 
+
+    fbow::fBow transform(const  cv::Mat  &training_feat_vec){
+        fbow::fBow word;
+        word = voc->transform(training_feat_vec);
+        return word;
+    }
+
     fbow::Vocabulary * voc;
     fbow::VocabularyCreator * voc_creator;
     fbow::VocabularyCreator::Params voc_creator_params;
@@ -143,7 +150,19 @@ namespace fs {
                       "Save vocabulary to file"))
                 .def("readFromFile", &Vocabulary::readFromFile,
                      (py::arg("Filename"),
-                      "Read vocabulary from file"));
+                      "Read vocabulary from file"))
+                //.def("transform", &Vocabulary::transform, py::return_value_policy<py::return_by_value>());
+                .def("transform", &Vocabulary::transform,
+                     (py::arg("Image Features"),
+                      "Convert images features to word"));
+
+
+            py::class_<fbow::fBow>("fBow")
+                .def("score", &fbow::fBow::score, py::return_value_policy<py::return_by_value>())
+
+                 .staticmethod("score");
+
+            py::class_<fbow::fBow2>("fBow2");
         }
 
     } // namespace fs

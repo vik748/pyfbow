@@ -5,7 +5,6 @@ matrix:
   # Feel free to add extra environment variables as needed
   include:
     - python: 3.5
-    - python: 3.8
 
 before_install:
   - sudo apt-get update
