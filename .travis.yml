@@ -24,7 +24,7 @@ before_install:
 
 install:
   # Create a new environment
-  - conda create -q -n pyfbow_test_env python=$TRAVIS_PYTHON_VERSION opencv=3.3.* numpy boost py-boost cmake
+  - conda create -q -n pyfbow_test_env python=$TRAVIS_PYTHON_VERSION opencv=3.3.* numpy boost py-boost cmake unzip
   - conda activate pyfbow_test_env
   - chmod +x build_and_install_pyfbow.sh
   - ./build_and_install_pyfbow.sh
@@ -32,3 +32,11 @@ install:
 script:
   - cd build
   - python -c "import pyfbow"
+  - cd ..
+  - mkdir data
+  - cd data
+  - wget https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_28_drive_0047/2011_09_28_drive_0047_sync.zip
+  - unzip https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_28_drive_0047/2011_09_28_drive_0047_sync.zip
+  - cd ..
+  - python utils/create_vocabulary.py data/2011_09_28/2011_09_28_drive_0047_sync/image_00/data/ -o test_vocab.bin
+

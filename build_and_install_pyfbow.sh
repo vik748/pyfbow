@@ -14,7 +14,7 @@ cd ..
 mkdir build
 cd build
 
-cmake -DCMAKE_PREFIX_PATH=$CWD/install/fbow_bin ../src
+cmake -DCMAKE_PREFIX_PATH=$CWD/install/fbow_bin -DBOOST_ROOT=$CONDA_PREFIX ../src
 make -j$(nproc)
 
 if [[ "$OSTYPE" == "darwin"* ]]; then

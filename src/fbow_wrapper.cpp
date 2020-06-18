@@ -26,7 +26,7 @@ void init_logging()
 {
     boost::log::core::get()->set_filter
     (
-        boost::log::trivial::severity >= boost::log::trivial::info
+        boost::log::trivial::severity >= boost::log::trivial::debug
     );
 }
 
@@ -68,6 +68,11 @@ public:
         _verbose = verbose;
         voc = new fbow::Vocabulary();
         voc_creator = new fbow::VocabularyCreator();
+        
+        BOOST_LOG_TRIVIAL(info)  << "Creating vocabulary with: k=" << voc_creator_params.k
+                                 << ", L=" << voc_creator_params.L
+                                 << ", nthreads= " << voc_creator_params.nthreads
+                                 << ", maxIters= " << voc_creator_params.maxIters ;
     }
 
     ~Vocabulary() {
@@ -79,11 +84,6 @@ public:
 
 
     void create(const  std::vector<cv::Mat>  &training_feat_vec ) {
-        BOOST_LOG_TRIVIAL(info)  << "Creating vocabulary with: k=" << voc_creator_params.k
-                                 << ", L=" << voc_creator_params.L
-                                 << ", nthreads= " << voc_creator_params.nthreads
-                                 << ", maxIters= " << voc_creator_params.maxIters ;
-
         BOOST_LOG_TRIVIAL(debug) << "Descriptor vec length: " << training_feat_vec.size();
         BOOST_LOG_TRIVIAL(debug) << "Descriptor 0 shape : "
                                  << training_feat_vec[0].rows << " rows x " << training_feat_vec[0].cols
