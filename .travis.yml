@@ -33,7 +33,7 @@ script:
   - mkdir data
   - cd data
   - wget https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_28_drive_0047/2011_09_28_drive_0047_sync.zip
-  - unzip https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_28_drive_0047/2011_09_28_drive_0047_sync.zip
+  - unzip 2011_09_28_drive_0047_sync.zip
   - cd ..
   - echo "$(pwd)/build" > $CONDA_PREFIX/lib/python$TRAVIS_PYTHON_VERSION/site-packages/pyfbow.pth
   - python -c "import pyfbow"
