@@ -31,3 +31,7 @@
 /build
 /install/fbow
 /install/fbow_bin
+/data
+
+#vocabularies
+*.bin
