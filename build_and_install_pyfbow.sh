@@ -15,7 +15,7 @@ mkdir build
 cd build
 
 cmake -DCMAKE_PREFIX_PATH=$CWD/install/fbow_bin ../src
-make
+make -j$(nproc)
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     ln -s pyfbow.dylib pyfbow.so
